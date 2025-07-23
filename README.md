@@ -48,8 +48,30 @@ The server provides a single tool, `browse_page`. To use the tool, send a JSON-R
 
 The server will respond with a JSON-RPC response containing the HTML content of the page.
 
+## Connecting the Server
+
+To connect the server to your MCP host, add the following to your `mcp_settings.json` file:
+
+```json
+"browser-server": {
+  "command": "node",
+  "args": [
+    "/path/to/browser-server/build/index.js"
+  ],
+  "env": {
+    "PLAYWRIGHT_BROWSERS_PATH": "/path/to/browser-server/bin"
+  },
+  "disabled": false,
+  "alwaysAllow": [
+    "browse_page"
+  ]
+}
+```
+
+Replace `/path/to/browser-server` with the absolute path to the `browser-server` directory.
+
 ## Portability
 
 This server is designed to be portable. To share the server, create a compressed archive of the entire `browser-server` directory. The recipient can then unarchive the package, run `npm install`, and then run the server.
 
-The Playwright browser binaries are stored in the `bin` directory. The server is configured to use this directory by setting the `PLAYWRIGHT_BROWSERS_PATH` environment variable in the `npm start` script.
+The Playwright browser binaries are stored in the `bin` directory. The server is configured to use this directory by setting the `PLAYWRIGHT_BROWSERS_PATH` environment variable in the `mcp_settings.json` file.
